@@ -25,7 +25,7 @@ plugins {
 def isCI = System.getenv('GITHUB_ACTIONS') != null
 
 gradleEnterprise {
-    server = "http://potato:9080"
+  server = "https://develocity-field.gradle.com"
     buildScan {
         capture { taskInputFiles = true }
         uploadInBackground = true

@@ -1209,3 +1209,11 @@ tasks.startScripts {
                 windowsScript.text.replace('CLASSPATH=%APP_HOME%\\lib','CLASSPATH=%APP_HOME%\\conf\\;%APP_HOME%\\lib-extra\\*;%APP_HOME%\\lib')
     }
 }
+
+tasks.named('test', Test) {
+    retry {
+        maxRetries = 3
+        maxFailures = 20
+        failOnPassedAfterRetry = true
+    }
+}
