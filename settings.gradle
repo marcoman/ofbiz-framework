@@ -24,12 +24,10 @@ plugins {
 
 def isCI = System.getenv('GITHUB_ACTIONS') != null
 
-gradleEnterprise {
+develocity {
   server = "https://develocity-field.gradle.com"
     buildScan {
-        capture { taskInputFiles = true }
         uploadInBackground = true
-        publishAlways()
     }
 }
 
