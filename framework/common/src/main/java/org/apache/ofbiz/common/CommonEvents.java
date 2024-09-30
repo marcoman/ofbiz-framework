@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.common;
 
+import io.github.pixee.security.SystemCommand;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -436,7 +437,7 @@ public class CommonEvents {
                     String cmd = (String) FlexibleStringExpander.getInstance(cmdTemplate).expand(sourceMap);
                     // run command
                     Debug.logInfo("Run command: " + cmd, MODULE);
-                    Process process = Runtime.getRuntime().exec(cmd);
+                    Process process = SystemCommand.runCommand(Runtime.getRuntime(), cmd);
                     // print result
                     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                     String line = "";
