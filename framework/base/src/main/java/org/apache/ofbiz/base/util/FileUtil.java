@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.util;
 
+import io.github.pixee.security.ZipSecurity;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -432,7 +433,7 @@ public final class FileUtil {
         }
 
         // get the Zip file content
-        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+        ZipInputStream zis = ZipSecurity.createHardenedInputStream(new FileInputStream(zipFile));
         // get the zipped file list entry
         ZipEntry ze = zis.getNextEntry();
 
