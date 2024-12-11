@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.datafile;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,7 +84,7 @@ public class RecordIterator {
         //move the cursor to the good start line
         try {
             for (int i = 0; i < modelDataFile.getStartLine(); i++) {
-                br.readLine();
+                BoundedLineReader.readLine(br, 5_000_000);
             }
         } catch (IOException e) {
             throw new DataFileException("Impossible to read the buffer");
@@ -122,7 +123,7 @@ public class RecordIterator {
             }
         } else {
             try {
-                nextLine = br.readLine();
+                nextLine = BoundedLineReader.readLine(br, 5_000_000);
             } catch (IOException e) {
                 throw new DataFileException("Error reading line #" + nextLineNum + " from location: " + locationInfo, e);
             }

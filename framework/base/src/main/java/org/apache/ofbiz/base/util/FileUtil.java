@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -182,7 +183,7 @@ public final class FileUtil {
         try (BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));) {
 
             String str;
-            while ((str = in.readLine()) != null) {
+            while ((str = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                 buf.append(str);
                 if (newline) {
                     buf.append(System.getProperty("line.separator"));

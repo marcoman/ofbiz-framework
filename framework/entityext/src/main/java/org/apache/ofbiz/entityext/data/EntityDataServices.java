@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.entityext.data;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -187,7 +188,7 @@ public class EntityDataServices {
                 // read each line as a file name to load
                 String line;
                 try {
-                    while ((line = reader.readLine()) != null) {
+                    while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                         line = line.trim();
                         File thisFile = new File(root, line);
                         if (thisFile.exists()) {
@@ -233,7 +234,7 @@ public class EntityDataServices {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(headerFile),
                             StandardCharsets.UTF_8));) {
 
-                String firstLine = reader.readLine();
+                String firstLine = BoundedLineReader.readLine(reader, 5_000_000);
                 if (firstLine != null) {
                     header = firstLine.split(delimiter);
                 }
@@ -242,7 +243,7 @@ public class EntityDataServices {
             }
         } else {
             BufferedReader reader = dataReader;
-            String firstLine = reader.readLine();
+            String firstLine = BoundedLineReader.readLine(reader, 5_000_000);
             if (firstLine != null) {
                 header = firstLine.split(delimiter);
             }
@@ -261,7 +262,7 @@ public class EntityDataServices {
         GeneralException exception = null;
         String line = null;
         int lineNumber = 1;
-        while ((line = reader.readLine()) != null) {
+        while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
             // process the record
             String fields[] = line.split(delimiter);
             //Debug.logInfo("Split record", MODULE);

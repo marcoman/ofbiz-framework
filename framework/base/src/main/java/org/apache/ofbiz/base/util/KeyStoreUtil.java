@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -206,7 +207,7 @@ public final class KeyStoreUtil {
         String line;
 
         // ignore up to the header
-        while ((line = reader.readLine()) != null && !line.equals(header)) {
+        while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null && !line.equals(header)) {
             Debug.logVerbose("Ignore up to the header...", MODULE);
         }
 
@@ -216,7 +217,7 @@ public final class KeyStoreUtil {
         }
 
         // in between the header and footer is the actual certificate
-        while ((line = reader.readLine()) != null && !line.equals(footer)) {
+        while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null && !line.equals(footer)) {
             line = line.replaceAll("\\s", "");
             ps.print(line);
         }

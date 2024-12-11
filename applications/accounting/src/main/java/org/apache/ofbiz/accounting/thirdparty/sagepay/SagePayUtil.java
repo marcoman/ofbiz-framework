@@ -19,6 +19,7 @@
 
 package org.apache.ofbiz.accounting.thirdparty.sagepay;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -214,7 +215,7 @@ public final class SagePayUtil {
             InputStream inputStream = httpEntity.getContent();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                 String data = null;
-                while ((data = reader.readLine()) != null) {
+                while ((data = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                     if (data.indexOf("=") != -1) {
                         String name = data.substring(0, data.indexOf("="));
                         String value = data.substring(data.indexOf("=") + 1);

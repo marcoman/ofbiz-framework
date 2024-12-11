@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.accounting.thirdparty.paypal;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -250,7 +251,7 @@ public class PayPalEvents {
                 PrintWriter pw = new PrintWriter(new OutputStreamWriter(uc.getOutputStream(), "UTF-8"))) {
 
             pw.println(str);
-            confirmResp = in.readLine();
+            confirmResp = BoundedLineReader.readLine(in, 5_000_000);
             Debug.logError("PayPal Verification Response: " + confirmResp, MODULE);
         } catch (IOException e) {
             Debug.logError(e, "Problems sending verification message.", MODULE);

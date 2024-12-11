@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.common;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -440,7 +441,7 @@ public class CommonEvents {
                     // print result
                     BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                     String line = "";
-                    while ((line = reader.readLine()) != null) {
+                    while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                         Debug.logInfo(line, MODULE);
                     }
                     return "success";

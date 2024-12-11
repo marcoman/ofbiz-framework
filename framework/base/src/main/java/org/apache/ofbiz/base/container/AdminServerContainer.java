@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.container;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -107,7 +108,7 @@ public final class AdminServerContainer implements Container {
                  PrintWriter writer = new PrintWriter(new OutputStreamWriter(client.getOutputStream(), StandardCharsets.UTF_8), true)) {
 
             // read client request and prepare response
-            String clientRequest = reader.readLine();
+            String clientRequest = BoundedLineReader.readLine(reader, 5_000_000);
             OfbizSocketCommand clientCommand = determineClientCommand(clientRequest);
             String serverResponse = prepareResponseToClient(clientCommand);
 

@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.common;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -461,7 +462,7 @@ public class CommonServices {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
                 Writer writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 Debug.logInfo("Read line: " + line, MODULE);
                 writer.write(line);
             }

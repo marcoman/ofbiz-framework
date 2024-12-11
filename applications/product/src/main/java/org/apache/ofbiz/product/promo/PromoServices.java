@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.product.promo;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
@@ -189,7 +190,7 @@ public class PromoServices {
 
         // read the uploaded file and process each line
         try {
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 // check to see if we should ignore this line
                 if (!line.isEmpty() && !line.startsWith("#")) {
                     if (line.length() <= 20) {
@@ -252,7 +253,7 @@ public class PromoServices {
 
         // read the uploaded file and process each line
         try {
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 if (!line.isEmpty() && !line.startsWith("#")) {
                     if (UtilValidate.isEmail(line)) {
                         // valid email address

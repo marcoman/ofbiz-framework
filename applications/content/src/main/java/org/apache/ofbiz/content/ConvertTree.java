@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.content;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -114,7 +115,7 @@ In order to make this service active add the following to the service definition
                 if (ServiceUtil.isError(result)) {
                     return ServiceUtil.returnError(ServiceUtil.getErrorMessage(result));
                 }
-                while ((line = input.readLine()) != null) { //start line
+                while ((line = BoundedLineReader.readLine(input, 5_000_000)) != null) { //start line
                     boolean hasFolder = true;
                     String rootContent = null;
                     String contentId = null; counterLine++;

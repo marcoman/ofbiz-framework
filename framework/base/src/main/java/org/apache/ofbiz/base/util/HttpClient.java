@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.util;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -416,7 +417,7 @@ public class HttpClient {
                 if (Debug.verboseOn() || debug) {
                     Debug.logVerbose("---- HttpClient Response Content ----", MODULE);
                 }
-                while ((line = post.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(post, 5_000_000)) != null) {
                     if (Debug.verboseOn() || debug) {
                         Debug.logVerbose("[HttpClient] : " + line, MODULE);
                     }

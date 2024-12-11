@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.start;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -80,7 +81,7 @@ class AdminClient {
             writer.println(config.getAdminKey() + ":" + socketCommand);
             writer.flush();
             // read the reply
-            response = reader.readLine();
+            response = BoundedLineReader.readLine(reader, 5_000_000);
         } catch (ConnectException e) {
             System.out.println("Could not connect to " + config.getAdminAddress() + ":" + config.getAdminPort());
         }
