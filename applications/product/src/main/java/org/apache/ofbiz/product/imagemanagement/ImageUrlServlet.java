@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.product.imagemanagement;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class ImageUrlServlet extends HttpServlet {
                 Debug.logError(e, MODULE);
             }
             String imageUrl = dataResource.getString("objectInfo");
-            RequestDispatcher rd = request.getRequestDispatcher("/control/viewImage?drObjectInfo=" + imageUrl);
+            RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath("/control/viewImage?drObjectInfo=" + imageUrl));
             rd.forward(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Image not found with ID [" + contentId + "]");

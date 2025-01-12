@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.product.category;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -131,9 +132,9 @@ public class SeoCatalogUrlServlet extends HttpServlet {
             request.setAttribute("productId", productId);
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/"
+        RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath("/"
                 + (UtilValidate.isEmpty(SeoControlServlet.getControlServlet()) ? "" : (SeoControlServlet.getControlServlet() + "/"))
-                + (productId != null ? PRODUCT_REQUEST : CATEGORY_REQUEST));
+                + (productId != null ? PRODUCT_REQUEST : CATEGORY_REQUEST)));
         rd.forward(request, response);
     }
 

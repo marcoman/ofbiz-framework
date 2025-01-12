@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.product.category;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class CatalogUrlServlet extends HttpServlet {
         String categoryId = null;
 
         if (pathElements == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/" + WebAppUtil.CONTROL_MOUNT_POINT + "/main");
+            RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath("/" + WebAppUtil.CONTROL_MOUNT_POINT + "/main"));
             rd.forward(request, response);
         } else {
             try {
@@ -142,8 +143,8 @@ public class CatalogUrlServlet extends HttpServlet {
                 request.setAttribute("productId", productId);
             }
 
-            RequestDispatcher rd = request.getRequestDispatcher("/" + WebAppUtil.CONTROL_MOUNT_POINT + "/" + (productId != null ? PRODUCT_REQUEST
-                    : CATEGORY_REQUEST));
+            RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath("/" + WebAppUtil.CONTROL_MOUNT_POINT + "/" + (productId != null ? PRODUCT_REQUEST
+                    : CATEGORY_REQUEST)));
             rd.forward(request, response);
         }
     }

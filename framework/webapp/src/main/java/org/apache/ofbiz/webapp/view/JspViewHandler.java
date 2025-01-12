@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.webapp.view;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -62,7 +63,7 @@ public class JspViewHandler extends AbstractViewHandler {
 
         // tell the ControlFilter we are forwarding
         request.setAttribute(ControlFilter.FORWARDED_FROM_SERVLET, Boolean.TRUE);
-        RequestDispatcher rd = request.getRequestDispatcher(page);
+        RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath(page));
 
         if (rd == null) {
             Debug.logInfo("HttpServletRequest.getRequestDispatcher() failed; trying ServletContext", MODULE);
