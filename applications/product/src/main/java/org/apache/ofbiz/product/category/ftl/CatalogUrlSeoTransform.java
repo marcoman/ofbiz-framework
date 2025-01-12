@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.product.category.ftl;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
@@ -623,7 +624,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
                     "/" + (productId != null ? CatalogUrlServlet.PRODUCT_REQUEST : CatalogUrlServlet.CATEGORY_REQUEST));
             UrlServletHelper.setViewQueryParameters(request, urlBuilder);
             Debug.logInfo("[Filtered request]: " + pathInfo + " (" + urlBuilder + ")", MODULE);
-            RequestDispatcher rd = request.getRequestDispatcher(urlBuilder.toString());
+            RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath(urlBuilder.toString()));
             rd.forward(request, response);
             return true;
         }
@@ -685,7 +686,7 @@ public class CatalogUrlSeoTransform implements TemplateTransformModel {
             urlBuilder.append("/" + CatalogUrlServlet.CATEGORY_REQUEST);
             UrlServletHelper.setViewQueryParameters(request, urlBuilder);
             Debug.logInfo("[Filtered request]: " + pathInfo + " (" + urlBuilder + ")", MODULE);
-            RequestDispatcher rd = request.getRequestDispatcher(urlBuilder.toString());
+            RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath(urlBuilder.toString()));
             rd.forward(request, response);
             return true;
         }

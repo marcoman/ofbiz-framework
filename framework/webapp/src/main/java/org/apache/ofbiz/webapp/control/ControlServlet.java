@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.webapp.control;
 
+import static io.github.pixee.security.jakarta.PathValidator.validateDispatcherPath;
 import static org.apache.ofbiz.base.util.StringUtil.replaceString;
 
 import java.io.IOException;
@@ -279,7 +280,7 @@ public class ControlServlet extends HttpServlet {
 
             boolean errorPageFailed = false;
             if (errorPage.endsWith(".jsp")) {
-                RequestDispatcher rd = request.getRequestDispatcher(errorPage);
+                RequestDispatcher rd = request.getRequestDispatcher(validateDispatcherPath(errorPage));
 
                 // use this request parameter to avoid infinite looping on errors in the error page...
                 if (request.getAttribute("_ERROR_OCCURRED_") == null && rd != null) {
