@@ -18,6 +18,7 @@
  *******************************************************************************/
 package org.apache.ofbiz.base.util;
 
+import static io.github.pixee.security.XMLInputFactorySecurity.hardenFactory;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +69,7 @@ public final class UtilHtml {
      * @return list of errors
      */
     public static List<String> hasUnclosedTag(String content) {
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = hardenFactory(XMLInputFactory.newInstance());
         XMLEventReader eventReader = null;
         List<String> errorList = new ArrayList<>();
         try {
